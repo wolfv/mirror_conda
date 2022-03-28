@@ -3,11 +3,11 @@ on: [ push ]
 #on:
 #    schedule:
 #        - cron: '*/30 * * * *'
-#permissions:
+permissions:
 #  contents: read
 #  contents: write
 #  pull-requests: write
-#  packages: read
+  packages: read
 #  packages: write
 
 
