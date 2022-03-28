@@ -37,7 +37,7 @@ jobs:
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
           echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
-          #conda-oci mirror --channel conda-forge --subdirs linux-64 -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+          conda-oci mirror --channel conda-forge --subdirs linux-64 -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
 
         shell: bash -l {0}
 
