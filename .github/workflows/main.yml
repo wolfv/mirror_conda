@@ -53,6 +53,7 @@ jobs:
           source ./prep_tf.sh ${{ env.GITHUB_OWNER }}
           echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
 
+          openstack keypair delete ${{ env.GITHUB_OWNER }}
           bash ./start_instances.sh
 #          conda-oci mirror --channel conda-forge --subdirs linux-64 -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
 
