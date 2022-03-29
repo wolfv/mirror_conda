@@ -35,13 +35,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      #- name: install mamba
+      #  uses: mamba-org/provision-with-micromamba@main
+      #  with:
+      #    environment-file: my_env.yml
+      #    micromamba-version: latest
+
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
-        with:
-          environment-file: my_env.yml
-          micromamba-version: latest
+
 
       - name: log in into oci repo & run the conda-oci CLI
+        shell: bash -l {0}
         run: |
           source ./openrc.sh ${{ env.OS_TENANT_ID }} ${{ env.OS_TENANT_NAME }}  ${{ env.OS_USERNAME }} ${{ env.OS_PASSWORD }} ${{ env.OS_REGION_NAME }}
           bash ./set_env.sh ${{ env.OS_TENANT_ID }} ${{ env.OS_TENANT_NAME }} ${{ env.OS_USERNAME }} ${{ env.OS_PASSWORD }} ${{ env.GITHUB_OWNER }}
@@ -50,7 +55,6 @@ jobs:
 
           bash ./start_instances.sh
 #          conda-oci mirror --channel conda-forge --subdirs linux-64 -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
-        shell: bash -l {0}
 
 
       - name: Upload the tfstate file
