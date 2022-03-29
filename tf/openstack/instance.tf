@@ -31,8 +31,8 @@ resource "openstack_compute_instance_v2" osinstance {
    region = var.region
    image_name  = var.image_names
    flavor_name = var.flavor_names
-
-   key_pair    = openstack_compute_keypair_v2.githubrunner.name
+   
+   key_pair    = openstack_compute_keypair_v2.condabuilder.name
    network {
     name      = "Ext-Net"
    }
