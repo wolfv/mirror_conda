@@ -18,8 +18,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
 
-      - name: list the files
+      - name:  clone project and mirror
         shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
@@ -34,8 +37,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
 
-      - name: list the files
+      - name:  clone project and mirror
         shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
@@ -50,8 +56,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
 
-      - name: list the files
+      - name:  clone project and mirror
         shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
@@ -66,8 +75,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
 
-      - name: list the files
+      - name:  clone project and mirror
         shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
@@ -82,8 +94,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
 
-      - name: list the files
+      - name:  clone project and mirror
         shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
@@ -98,8 +113,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
-
-      - name: list the files
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
+      - name: clone project and mirror
         shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
@@ -114,8 +131,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
 
-      - name: list the files
+      - name:  clone project and mirror
         shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
