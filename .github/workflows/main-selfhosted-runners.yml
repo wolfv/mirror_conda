@@ -1,20 +1,5 @@
 name: Dowload and Mirror packages from anaconda 
 on: [workflow_dispatch]
-#on:
-#  push:
-#    branches:
-#      - master
-#on:
-#    schedule:
-#        - cron: '*/30 * * * *'
-
-#permissions:
-#  contents: read
-#  contents: write
-#  pull-requests: write
-#  packages: read
-#  packages: write
-
 
 defaults:
   run:
@@ -36,15 +21,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      #- name: install mamba
-      #  uses: mamba-org/provision-with-micromamba@main
-      #  with:
-      #    environment-file: my_env.yml
-      #    micromamba-version: latest
-
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
-
+        with:
+          environment-file: my_env.yml
+          micromamba-version: latest
 
       - name: log in into oci repo & run the conda-oci CLI
         shell: bash -l {0}
