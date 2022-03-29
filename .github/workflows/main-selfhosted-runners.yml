@@ -11,8 +11,8 @@ jobs:
     env:
       GITHUB_USER: ${{ github.actor }}
 #      GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
-      GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
-      OS_TENANT_ID: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
       OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
       OS_USERNAME: ${{ secrets.OS_USERNAME }}
       OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
