@@ -9,7 +9,7 @@ defaults:
     working-directory: ./
 
 jobs:
-  build-${{ matrix.subdir }}-pkgs:
+  mirror-pkgs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
