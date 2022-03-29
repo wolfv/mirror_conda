@@ -16,6 +16,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: master
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
@@ -23,10 +25,12 @@ jobs:
           micromamba-version: latest
 
       - name:  clone project and mirror
-        shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
           conda-oci mirror --channel conda-forge -s linux-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+      - run: echo "🍏 The current status is ${{ job.status }}."
+
 
   build-osx64-pkgs:
     runs-on: ubuntu-latest
@@ -35,6 +39,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: master
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
@@ -42,10 +48,12 @@ jobs:
           micromamba-version: latest
 
       - name:  clone project and mirror
-        shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
           conda-oci mirror --channel conda-forge -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+      - run: echo "🍏 The current status is ${{ job.status }}."
+
 
   build-osxarm64-pkgs:    
     runs-on: ubuntu-latest
@@ -54,6 +62,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: master
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
@@ -61,10 +71,12 @@ jobs:
           micromamba-version: latest
 
       - name:  clone project and mirror
-        shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
           conda-oci mirror --channel conda-forge -s osx-arm64 --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+      - run: echo "🍏 The current status is ${{ job.status }}."
+
 
   build-win64-pkgs:    
     runs-on: ubuntu-latest
@@ -73,6 +85,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: master
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
@@ -80,10 +94,12 @@ jobs:
           micromamba-version: latest
 
       - name:  clone project and mirror
-        shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
           conda-oci mirror --channel conda-forge -s win-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+      - run: echo "🍏 The current status is ${{ job.status }}."
+
 
   build-linuxaarch64-pkgs:
     runs-on: ubuntu-latest
@@ -92,6 +108,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: master
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
@@ -99,10 +117,12 @@ jobs:
           micromamba-version: latest
 
       - name:  clone project and mirror
-        shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
           conda-oci mirror --channel conda-forge -s linux-aarch64 --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+      - run: echo "🍏 The current status is ${{ job.status }}."
+
 
   build-linuxppc64le-pkgs:
     runs-on: ubuntu-latest
@@ -111,16 +131,20 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: master
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
           environment-file: my_env.yml
           micromamba-version: latest
       - name: clone project and mirror
-        shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
           conda-oci mirror --channel conda-forge -s linux-ppc64le --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+      - run: echo "🍏 The current status is ${{ job.status }}."
+
 
   build-noarch-pkgs:
     runs-on: ubuntu-latest
@@ -129,6 +153,9 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
     steps:
       - uses: actions/checkout@v2
+        with:
+            ref: master
+
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
@@ -136,8 +163,10 @@ jobs:
           micromamba-version: latest
 
       - name:  clone project and mirror
-        shell: bash -l {0}
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
-          conda-oci mirror --channel conda-forge -s noarch --user ${{ env.GITHUB_USER }}
+          conda-oci mirror --channel conda-forge -s noarch --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+      - run: echo "🍏 The current status is ${{ job.status }}."
+
   
