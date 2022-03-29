@@ -9,4 +9,5 @@ export TF_VAR_user_domain_name=$OS_USER_DOMAIN_NAME
 export TF_VAR_tenant_name=$OS_TENANT_NAME
 export TF_VAR_tenant_id=$OS_TENANT_ID
 export TF_VAR_ansible_user="ubuntu"
+echo "pwd: $TF_VAR_password; name: $TF_VAR_user_name"
 #          openstack keypair delete ${{ env.GITHUB_OWNER }}-00
