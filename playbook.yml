@@ -14,63 +14,79 @@
 
 - name: Activate and test the first runner
   hosts: runner-1
+  vars:
+    token: "string-token"
   tasks:
     - name: Configure and start the runner1
       shell: |
         cd actions-runner/
-        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBXEFVQYV65HI7EBZH3CILNUA --labels linuxx64,runner1 --name condabuilder1 --unattended --ephemeral
+        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBUH65O4R45AHTKFXJ3CIL4SQ --labels linuxx64,runner1 --name condabuilder1 --unattended --ephemeral
 
 - name: Activate and test the  second runner
   hosts: runner-2
+  vars:
+    token: "string-token"
   tasks:
     - name: Configure and start the runner2
       shell: |
         cd ./actions-runner
-        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBXEFVQYV65HI7EBZH3CILNUA --labels osx64,runner2 --name condabuilder2 --unattended --ephemeral
+        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBUH65O4R45AHTKFXJ3CIL4SQ --labels osx64,runner2 --name condabuilder2 --unattended --ephemeral
   
 - name: Activate and test the  the runner3
   hosts: runner-3
+  vars:
+    token: "string-token"
   tasks:
     - name: Configure and start the runner3
       shell: |
         cd ./actions-runner
-        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBXEFVQYV65HI7EBZH3CILNUA --labels osxarm64,runner3 --name condabuilder3 --unattended --ephemeral
+        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBUH65O4R45AHTKFXJ3CIL4SQ --labels osxarm64,runner3 --name condabuilder3 --unattended --ephemeral
 
   
 - name: Activate and test the  the runner4
   hosts: runner-4
+  vars:
+    token: "string-token"
+  vars:
+    token: "string-token"
   tasks:
     - name: Configure and start the runner4
       shell: |
         cd ./actions-runner
-        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBXEFVQYV65HI7EBZH3CILNUA --labels win64,runner4 --name condabuilder4 --unattended --ephemeral
+        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBUH65O4R45AHTKFXJ3CIL4SQ --labels win64,runner4 --name condabuilder4 --unattended --ephemeral
 
   
 - name: Activate and test the  the runner5
   hosts: runner-5
+  vars:
+    token: "string-token"
   tasks:
     - name: Configure and start the runner5
       shell: |
         cd ./actions-runner
-        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBXEFVQYV65HI7EBZH3CILNUA --labels linuxaarch64,runner5 --name condabuilder5 --unattended --ephemeral
+        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBUH65O4R45AHTKFXJ3CIL4SQ --labels linuxaarch64,runner5 --name condabuilder5 --unattended --ephemeral
 
   
 - name: Activate and test the  the runner6
   hosts: runner-6
+  vars:
+    token: "string-token"
   tasks:
     - name: Configure and start the runner6
       shell: |
         cd ./actions-runner
-        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBXEFVQYV65HI7EBZH3CILNUA --labels linuxppc64le,runner6 --name condabuilder6 --unattended --ephemeral
+        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBUH65O4R45AHTKFXJ3CIL4SQ --labels linuxppc64le,runner6 --name condabuilder6 --unattended --ephemeral
 
   
 - name: Activate and test the  the runner7
   hosts: runner-7
+  vars:
+    token: "string-token"
   tasks:
     - name: Configure and start the runner7
       shell: |
         cd ./actions-runner
-        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBXEFVQYV65HI7EBZH3CILNUA --labels noarch,runner7 --name condabuilder7 --unattended --ephemeral
+        ./config.sh --url https://github.com/MichaelKora/mirror_conda --token ATILRBUH65O4R45AHTKFXJ3CIL4SQ --labels noarch,runner7 --name condabuilder7 --unattended --ephemeral
 
 
 - name: Configure with svc.sh

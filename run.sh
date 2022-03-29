@@ -7,4 +7,4 @@ echo "***ansible commands ... "
 ansible-inventory --list
 
 #run the playbook
-ansible-playbook playbook.yml
+ansible-playbook playbook.yml --extra-vars "token="
