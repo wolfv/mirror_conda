@@ -20,7 +20,7 @@ defaults:
     working-directory: ./
 
 jobs:
-  create_oras_push:
+  get-runners-up-and-running:
     runs-on: ubuntu-latest
     env:
       GITHUB_USER: ${{ github.actor }}
@@ -78,7 +78,7 @@ jobs:
 #      - run: echo "🍏 The current status is ${{ job.status }}."
 
   build-linux64-pkgs:
-    needs: mirror linuxx64 packages
+    needs: get-runners-up-and-running
     runs-on: [self-hosted,linuxx64,runner1]
     steps:
       - name: list the files
@@ -88,7 +88,7 @@ jobs:
           conda-oci mirror --channel conda-forge -s linux-64 --packages xtensor --user ${{ env.GITHUB_USER }}
 
   build-osx64-pkgs:
-    needs: mirror osx64 packages
+    needs: get-runners-up-and-running
     runs-on: [self-hosted,osx64,runner2]
     steps:
       - name: list the files
@@ -98,7 +98,7 @@ jobs:
           conda-oci mirror --channel conda-forge -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
 
   build-osxarm64-pkgs:
-    needs: mirror osxarm64 packages
+    needs: get-runners-up-and-running
     runs-on: [self-hosted,osxarm64,runner3]
     steps:
       - name: list the files
@@ -108,7 +108,7 @@ jobs:
           conda-oci mirror --channel conda-forge -s osx-arm64 --packages xtensor --user ${{ env.GITHUB_USER }}
 
   build-win64-pkgs:
-    needs: mirror win64 packages
+    needs: get-runners-up-and-running
     runs-on: [self-hosted,win64,runner4]
     steps:
       - name: list the files
@@ -118,7 +118,7 @@ jobs:
           conda-oci mirror --channel conda-forge -s win-64 --packages xtensor --user ${{ env.GITHUB_USER }}
 
   build-linuxaarch64-pkgs:
-    needs: mirror linuxaarch64 packages
+    needs: get-runners-up-and-running
     runs-on: [self-hosted,linuxaarch64,runner5]
     steps:
       - name: list the files
@@ -128,7 +128,7 @@ jobs:
           conda-oci mirror --channel conda-forge -s linux-aarch64 --packages xtensor --user ${{ env.GITHUB_USER }}
 
   build-linuxppc64le-pkgs:
-    needs: mirror linuxppc64le packages
+    needs: get-runners-up-and-running
     runs-on: [self-hosted,linuxppc64le,runner6]
     steps:
       - name: list the files
@@ -138,7 +138,7 @@ jobs:
           conda-oci mirror --channel conda-forge -s linux-ppc64le --packages xtensor --user ${{ env.GITHUB_USER }}
 
   build-noarch-pkgs:
-    needs: mirror noarch packages
+    needs: get-runners-up-and-running
     runs-on: [self-hosted,noarch,runner7]
     steps:
       - name: list the files
