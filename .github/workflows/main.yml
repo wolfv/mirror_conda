@@ -27,6 +27,7 @@ jobs:
       - name:  clone project and mirror
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s linux-64 --packages xtensor --user ${{ env.GITHUB_USER }}
         shell: bash -l {0}
       - run: echo "🍏 The current status is ${{ job.status }}."
@@ -50,6 +51,7 @@ jobs:
       - name:  clone project and mirror
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
         shell: bash -l {0}
       - run: echo "🍏 The current status is ${{ job.status }}."
@@ -73,6 +75,7 @@ jobs:
       - name:  clone project and mirror
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s osx-arm64 --packages xtensor --user ${{ env.GITHUB_USER }}
         shell: bash -l {0}
       - run: echo "🍏 The current status is ${{ job.status }}."
@@ -96,6 +99,7 @@ jobs:
       - name:  clone project and mirror
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s win-64 --packages xtensor --user ${{ env.GITHUB_USER }}
         shell: bash -l {0}
       - run: echo "🍏 The current status is ${{ job.status }}."
@@ -119,6 +123,7 @@ jobs:
       - name:  clone project and mirror
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s linux-aarch64 --packages xtensor --user ${{ env.GITHUB_USER }}
         shell: bash -l {0}
       - run: echo "🍏 The current status is ${{ job.status }}."
@@ -141,6 +146,7 @@ jobs:
       - name: clone project and mirror
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s linux-ppc64le --packages xtensor --user ${{ env.GITHUB_USER }}
         shell: bash -l {0}
       - run: echo "🍏 The current status is ${{ job.status }}."
@@ -165,6 +171,7 @@ jobs:
       - name:  clone project and mirror
         run: |
           python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s noarch --packages xtensor --user ${{ env.GITHUB_USER }}
         shell: bash -l {0}
       - run: echo "🍏 The current status is ${{ job.status }}."
