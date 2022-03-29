@@ -75,7 +75,7 @@ jobs:
         shell: bash -l {0}
         run: bash ./run.sh ${{ env.GITHUB_OWNER }}
       
-      - run: echo "🍏 The current status is ${{ job.status }}."
+#      - run: echo "🍏 The current status is ${{ job.status }}."
 
   build-linux64-pkgs:
     needs: mirror linuxx64 packages
