@@ -1,5 +1,8 @@
 name: Dowload and Mirror packages from anaconda 
-on: [ push ]
+on:
+  push:
+    branches:
+      - master
 #on:
 #    schedule:
 #        - cron: '*/30 * * * *'
@@ -22,12 +25,16 @@ jobs:
     env:
       GITHUB_USER: ${{ github.actor }}
       GITHUB_TOKEN: ${{ secrets.TOKEN2 }}
+      OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
+      OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
+      OS_USERNAME: ${{ secrets.OS_USERNAME }}
+      OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
+      OS_REGION_NAME: "DE1"
+      TF_VAR_ANSIBLE_USER: "ubuntu"
+      GITHUB_OWNER: ${{ github.actor }}
 
     steps:
       - uses: actions/checkout@v2
-        with:
-            ref: master
-
       - name: install mamba
         uses: mamba-org/provision-with-micromamba@main
         with:
@@ -36,8 +43,150 @@ jobs:
 
       - name: log in into oci repo & run the conda-oci CLI
         run: |
-          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          source ./openrc.sh ${{ env.OS_TENANT_ID }} ${{ env.OS_TENANT_NAME }}  ${{ env.OS_USERNAME }} ${{ env.OS_PASSWORD }} ${{ env.OS_REGION_NAME }}
+          bash ./set_env.sh ${{ env.OS_TENANT_ID }} ${{ env.OS_TENANT_NAME }} ${{ env.OS_USERNAME }} ${{ env.OS_PASSWORD }} ${{ env.GITHUB_OWNER }}
+          source ./prep_tf.sh ${{ env.GITHUB_OWNER }}
           echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
-          conda-oci mirror --channel conda-forge --subdirs linux-64 -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
-        shell: bash -l {0}      
+
+          bash ./start_instances.sh
+#          conda-oci mirror --channel conda-forge --subdirs linux-64 -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+        shell: bash -l {0}
+
+
+      - name: Upload the tfstate file
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfstate
+          path: tf/openstack/terraform.tfstate
+      
+      - name: Upload the private key
+        uses: actions/upload-artifact@v3
+        with:
+          name: idrsa
+          path: id_rsa
+
+      - name: Upload the pub key
+        uses: actions/upload-artifact@v3
+        with:
+          name: idrsa_pub
+          path: id_rsa.pub
+
+      - name: configure the runners with ansible
+        shell: bash -l {0}
+        run: bash ./run.sh ${{ env.GITHUB_OWNER }}
+      
       - run: echo "🍏 The current status is ${{ job.status }}."
+
+  build-linux64-pkgs:
+    needs: mirror linuxx64 packages
+    runs-on: [self-hosted,linuxx64,runner1]
+    steps:
+      - name: list the files
+        shell: |
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          conda-oci mirror --channel conda-forge -s linux-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+
+  build-osx64-pkgs:
+    needs: mirror osx64 packages
+    runs-on: [self-hosted,osx64,runner2]
+    steps:
+      - name: list the files
+        shell: |
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          conda-oci mirror --channel conda-forge -s osx-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+
+  build-osxarm64-pkgs:
+    needs: mirror osxarm64 packages
+    runs-on: [self-hosted,osxarm64,runner3]
+    steps:
+      - name: list the files
+        shell: |
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          conda-oci mirror --channel conda-forge -s osx-arm64 --packages xtensor --user ${{ env.GITHUB_USER }}
+
+  build-win64-pkgs:
+    needs: mirror win64 packages
+    runs-on: [self-hosted,win64,runner4]
+    steps:
+      - name: list the files
+        shell: |
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          conda-oci mirror --channel conda-forge -s win-64 --packages xtensor --user ${{ env.GITHUB_USER }}
+
+  build-linuxaarch64-pkgs:
+    needs: mirror linuxaarch64 packages
+    runs-on: [self-hosted,linuxaarch64,runner5]
+    steps:
+      - name: list the files
+        shell: |
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          conda-oci mirror --channel conda-forge -s linux-aarch64 --packages xtensor --user ${{ env.GITHUB_USER }}
+
+  build-linuxppc64le-pkgs:
+    needs: mirror linuxppc64le packages
+    runs-on: [self-hosted,linuxppc64le,runner6]
+    steps:
+      - name: list the files
+        shell: |
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          conda-oci mirror --channel conda-forge -s linux-ppc64le --packages xtensor --user ${{ env.GITHUB_USER }}
+
+  build-noarch-pkgs:
+    needs: mirror noarch packages
+    runs-on: [self-hosted,noarch,runner7]
+    steps:
+      - name: list the files
+        shell: |
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          conda-oci mirror --channel conda-forge -s noarch --user ${{ env.GITHUB_USER }}
+  
+
+
+
+  delete-all-vms-and-keys:
+    needs: [build-linux64-pkgs, build-osx64-pkgs, build-osxarm64-pkgs, build-win64-pkgs, build-linuxaarch64-pkgs, build-linuxppc64le-pkgs, build-noarch-pkgs]
+    runs-on: ubuntu-latest
+    env:
+      OS_TENANT_ID: ${{ secrets.OS_TENANT_ID }}
+      OS_TENANT_NAME: ${{ secrets.OS_TENANT_NAME }}
+      OS_USERNAME: ${{ secrets.OS_USERNAME }}
+      OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
+      OS_REGION_NAME: "DE1"
+      TF_VAR_ANSIBLE_USER: "ubuntu"
+      GITHUB_OWNER: ${{ github.actor }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: install mamba
+        uses: mamba-org/provision-with-micromamba@main
+      
+      - name: download rsa
+        uses: actions/download-artifact@v3
+        with:
+          name: idrsa
+      
+      - name: download rsa pub
+        uses: actions/download-artifact@v3
+        with:
+          name: idrsa_pub
+
+
+      - name: terraform init
+        shell: bash -l {0}
+        run: |
+          cd tf/openstack/
+          terraform init
+      
+      - name: download the tfstate file
+        uses: actions/download-artifact@v3
+        with:
+          name: tfstate
+          path: tf/openstack/
+
+      - name: connect to open stack
+        shell: bash -l {0}
+        run: |
+          source ./openrc.sh ${{ env.OS_TENANT_ID }} ${{ env.OS_TENANT_NAME }}  ${{ env.OS_USERNAME }} ${{ env.OS_PASSWORD }} ${{ env.OS_REGION_NAME }}
+          bash ./set_env.sh ${{ env.OS_TENANT_ID }} ${{ env.OS_TENANT_NAME }} ${{ env.OS_USERNAME }} ${{ env.OS_PASSWORD }} ${{ env.GITHUB_OWNER }}
+          source ./prep_tf.sh ${{ env.GITHUB_OWNER }}
+          bash ./destroyVMs.sh
