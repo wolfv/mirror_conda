@@ -21,9 +21,9 @@ jobs:
       - name: testi test
         shell: bash -l {0}
         run: |
-          curl -u wolfv:$GITHUB_TOKEN https://api.github.com/user/packages\?package_type\=container
-          curl -u wolfv:$GITHUB_TOKEN https://api.github.com/users/wolfv/packages\?package_type\=container
-          curl -u wolfv:$GITHUB_TOKEN https://api.github.com/orgs/wolfv/packages\?package_type\=container
+          curl -u wolfv:$GITHUB_TOKEN "https://api.github.com/user/packages?package_type=container"
+          curl -u wolfv:$GITHUB_TOKEN "https://api.github.com/users/wolfv/packages?package_type=container"
+          curl -u wolfv:$GITHUB_TOKEN "https://api.github.com/orgs/wolfv/packages?package_type=container"
       # - uses: actions/checkout@v2
       #   with:
       #       ref: master
