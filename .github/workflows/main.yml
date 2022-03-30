@@ -30,6 +30,6 @@ jobs:
       - name:  clone project and mirror
         shell: bash -l {0}
         run: |
-          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@main
+          python -m pip install git+https://github.com/mamba-org/conda_oci_mirror@fix_github_api
           echo ${{ env.GITHUB_TOKEN }} | oras login https://ghcr.io -u ${{ env.GITHUB_USER }} --password-stdin
           conda-oci mirror --channel conda-forge -s ${{ matrix.subdir }} --packages xtensor --user ${{ env.GITHUB_USER }}
